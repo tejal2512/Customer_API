@@ -30,13 +30,14 @@ public class CustomerController {
     @ResponseBody
     public Login loginHandle(@RequestBody Login login){
         System.out.println("Calling login controller");
+        System.out.println(login.getEmail()+" "+login.getPassword());
         return loginService.loginHandle(login);
     }
 
     @PostMapping("/forgotPwdHandle/{email}")
-    public void forgotPasswordHandle(@PathVariable String email){
-        System.out.println("Calling forgot password controller");
-        forgotPwdService.sendMail(email);
+    public Boolean forgotPasswordHandle(@PathVariable String email) {
+        System.out.println("Calling forgot password controller with email: " + email);
+        return forgotPwdService.sendMail(email);
     }
 
     @PostMapping("/register")
@@ -48,10 +49,11 @@ public class CustomerController {
     }
 
     @PostMapping("/reset-pwd")
-    @ResponseBody
     public RestResponse resetPassword(@RequestBody ResetPassword resetPassword){
+        RestResponse response=new RestResponse();
         System.out.println(resetPassword);
         System.out.println("Calling reset password customer controller");
-        return resetPwdService.resetPassword(resetPassword);
+        response.setResponse(resetPwdService.resetPassword(resetPassword));
+        return response;
     }
 }

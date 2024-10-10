@@ -17,20 +17,29 @@ public class ResetPwdServiceImpl implements ResetPwdService{
 
     Customer customer=new Customer();
 
-    public RestResponse resetPassword(ResetPassword resetPassword){
+    public String  resetPassword(ResetPassword resetPassword){
         System.out.println(resetPassword);
+        String response;
         customer=customerRepo.findByEmail(resetPassword.getEmail());
-
-        if(!resetPassword.getNewPwd().equals(resetPassword.getConfirmNewPwd())){
-            response.setResponse("Passwords must match");
+        if(customer==null){
+            response="Please enter registered email id";
+            System.out.println(response);
             return response;
-        }else {
+        }
+        if(!resetPassword.getNewPwd().equals(resetPassword.getConfirmNewPwd())){
+            response="Passwords must match";
+            System.out.println(response);
+            return response;
 
+
+        }else {
             customer.setEmail(customer.getEmail());
             customer.setPassword(resetPassword.getNewPwd());
             customerRepo.save(customer);
-            response.setResponse("Password updated please try to login now");
-            return  response;
+            response="Password updated please try to login now";
+            System.out.println(response);
+            return response;
+
         }
     }
 

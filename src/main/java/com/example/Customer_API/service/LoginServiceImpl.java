@@ -23,6 +23,7 @@ public class LoginServiceImpl implements LoginService{
             login1.setPassword(customer.getPassword());
             return login1;
         }
+        System.out.println(login1.getEmail()+" "+login1.getPassword());
         return login1;
     }
 }
